@@ -1,0 +1,80 @@
+<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+
+<dom-module id="my-iron-pages">
+	<style>
+		.pages-wrapper {
+			position:absolute;
+			top:0;
+			bottom:0;
+			left:0;
+			right:0;
+			margin:auto;
+			padding:20px;
+			background-color:#ccc;
+		}
+
+		iron-pages > div {
+			text-align:center;
+			min-height:250px;
+			background-color:#ffffff;
+			padding:20px 100px;
+		}
+
+		.pages-content {
+			position:relative;
+		}
+
+		.pages-content .control {
+			position:absolute;
+			top:0;
+			bottom:0;
+			margin:auto;
+			background:#3f51b5;
+		}
+
+		#prevElement {
+			left:10px;
+		}
+
+		#nextElement {
+			right:10px;
+		}
+	</style>
+
+	<template>
+		<div class="pages-wrapper">
+			<div class="pages-content">
+				<iron-pages id="pages" selected="0">			
+					<div class="iron-selected">One</div>
+					<div>Two</div>
+					<div>Three</div>			
+				</iron-pages>
+				<paper-fab class="control" id="prevElement" icon="arrow-back"></paper-fab>
+				<paper-fab class="control" id="nextElement" icon="arrow-forward"></paper-fab>
+			</div>
+		</div>
+	</template>
+
+	<script>
+		Polymer ({
+			is: "my-iron-pages",
+
+			ready: function() {			
+				var pages = document.querySelector('iron-pages');
+				var fabPrev = this.$.prevElement;
+				var fabNext = this.$.nextElement;
+
+				fabPrev.addEventListener('tap', function() {
+					pages.selectPrevious();
+				});
+
+				fabNext.addEventListener('tap', function() {
+					pages.selectNext();
+				});
+			}
+		});
+	</script>
+</dom-module>
