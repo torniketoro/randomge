@@ -2,6 +2,9 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+
 
 <dom-module id="my-iron-pages">
 	<style>
@@ -45,15 +48,25 @@
 	</style>
 
 	<template>
+		<iron-ajax
+			url="http://random.iuri.site.itdc.ge/data/api.php"
+			params='{"alt":"json", "q":"chrome"}'
+			handle-as="json"
+			last-response="{{ajaxResponse}}"
+			on-response ="handleResponse"
+			on-error="handleError"
+			id="AjaxSource"
+		>
+		</iron-ajax>	
 		<div class="pages-wrapper">
 			<div class="pages-content">
-				<iron-pages id="pages" selected="0">			
-					<div class="iron-selected">One</div>
-					<div>Two</div>
-					<div>Three</div>			
+				<paper-spinner id="loader"></paper-spinner>		
+				<iron-pages id="pages" selected="0">
+					<h2>{{ajaxResponse.id}}</h2>
+					<div id="jokeContent" class="iron-selected">{{ajaxResponse.text}}</div>
 				</iron-pages>
-				<paper-fab class="control" id="prevElement" icon="arrow-back"></paper-fab>
-				<paper-fab class="control" id="nextElement" icon="arrow-forward"></paper-fab>
+				<paper-fab class="control" id="prevElement" icon="arrow-back" on-click="prevPage"></paper-fab>
+				<paper-fab class="control" id="nextElement" icon="arrow-forward" on-click="nextPage"></paper-fab>
 			</div>
 		</div>
 	</template>
@@ -62,18 +75,40 @@
 		Polymer ({
 			is: "my-iron-pages",
 
-			ready: function() {			
-				var pages = document.querySelector('iron-pages');
-				var fabPrev = this.$.prevElement;
-				var fabNext = this.$.nextElement;
+			properties : {
+				ajaxResponse : {
+					type: Array
+				}
+			},
 
-				fabPrev.addEventListener('tap', function() {
-					pages.selectPrevious();
-				});
+			pages : false,
+			AjaxSource : false,
 
-				fabNext.addEventListener('tap', function() {
-					pages.selectNext();
-				});
+			ready: function() {
+				this.AjaxSource = this.$.AjaxSource;
+				this.loadJoke();
+				//this.pages = document.querySelector('iron-pages');
+			},
+
+			prevPage : function(){
+				this.loadJoke();
+			},
+			nextPage : function(){
+				this.loadJoke();	
+			},
+
+			loadJoke : function(){
+				this.$.loader.active = true;
+				this.AjaxSource.generateRequest();	
+			},
+
+			handleResponse : function(){
+				this.$.loader.active = false;
+				console.log(this.ajaxResponse);
+			},
+
+			handleError : function(){
+				console.log('here');
 			}
 		});
 	</script>

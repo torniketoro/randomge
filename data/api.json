@@ -1,0 +1,19 @@
+[
+	{
+		"id" : 1,
+		"text" : "alsdk jalskdj alskdj asldkj ad",
+		"liked" : true,
+	},
+
+	{
+		"id" : 2,
+		"text" : "second joke",
+		"liked" : false,
+	},
+
+	{
+		"id" : 3,
+		"text" : "asdf sdfsdfsdf  joke",
+		"liked" : true,
+	}
+]
