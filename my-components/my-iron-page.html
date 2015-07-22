@@ -1,9 +1,11 @@
 <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 
 
 <dom-module id="my-iron-pages">
@@ -23,33 +25,98 @@
 			text-align:center;
 			min-height:250px;
 			background-color:#ffffff;
-			padding:20px 100px;
+			padding:60px 30px 30px 30px;
 		}
 
 		.pages-content {
 			position:relative;
 		}
 
+		#loader {
+			position:absolute;
+			top:0px;
+			bottom:0px;
+			left:0px;
+			right:0px;
+			margin:auto;
+		}
+
 		.pages-content .control {
 			position:absolute;
-			top:0;
-			bottom:0;
-			margin:auto;
-			background:#3f51b5;
+			top:20px;
+			cursor:pointer;
+		}
+
+		.pages-content .control:hover,
+		.pages-content .control:active {
+			color:#3f51b5;
 		}
 
 		#prevElement {
-			left:10px;
+			left:20px;
 		}
 
 		#nextElement {
-			right:10px;
+			right:20px;
+		}
+
+		.favorite {
+			position:absolute;
+			top:20px;
+			left:0px;
+			right:0px;
+			margin:0 auto;
+			color:#bdbdbd;
+			width:22px;
+			height:22px;
+		}
+
+		.fab {
+			position: fixed;
+			bottom:40px;
+			right:40px;
+			display: inline-block;
+			width: 56px;
+			height: 56px;
+			border-radius: 50%;
+			color: #fff;
+			overflow: hidden;
+			transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+			transition-delay: 0.2s;
+			box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+			cursor:pointer;
+		}
+
+		.fab.red {
+			background-color: #d23f31;
+		}
+
+		.fab .add {
+			margin:16px;
+		}
+
+		paper-toast {
+			z-index:999;
+			background-color:#d9534f;
+			color:#ffffff;
+		}
+
+		paper-toast span {
+			display:inline-block;
+			padding:5px;
+		}
+
+		paper-toast .retry {
+			cursor:pointer;
+			color:#282828;
+			font-weight:bold;
+			text-decoration:underline;
 		}
 	</style>
 
 	<template>
 		<iron-ajax
-			url="http://random.iuri.site.itdc.ge/data/api.php"
+			url="http://localhost/randomge/data/api.php"
 			params='{"alt":"json", "q":"chrome"}'
 			handle-as="json"
 			last-response="{{ajaxResponse}}"
@@ -59,15 +126,27 @@
 		>
 		</iron-ajax>	
 		<div class="pages-wrapper">
-			<div class="pages-content">
-				<paper-spinner id="loader"></paper-spinner>		
+			<div class="pages-content">		
 				<iron-pages id="pages" selected="0">
-					<h2>{{ajaxResponse.id}}</h2>
-					<div id="jokeContent" class="iron-selected">{{ajaxResponse.text}}</div>
+					<div class="iron-selected">
+						<paper-icon-button icon="favorite" class="favorite" on-click="addToFavorites"></paper-icon-button>
+						<div id="jokeContent">{{ajaxResponse.text}}</div>
+					</div>
 				</iron-pages>
-				<paper-fab class="control" id="prevElement" icon="arrow-back" on-click="prevPage"></paper-fab>
-				<paper-fab class="control" id="nextElement" icon="arrow-forward" on-click="nextPage"></paper-fab>
+				<paper-spinner id="loader"></paper-spinner>
+				<iron-icon class="control" id="prevElement" icon="icons:arrow-back" on-click="prevPage"></iron-icon>
+				<iron-icon class="control" id="nextElement" icon="icons:arrow-forward" on-click="nextPage"></iron-icon>
 			</div>
+
+			<paper-toast id="notification">
+				<span>{{text}}</span>
+				<span on-click="loadJoke" class="retry">retry</span>
+			</paper-toast>
+		</div>
+
+		<div class="fab red">
+			<iron-icon icon="add" class="add"></iron-icon>
+			<paper-ripple class="circle" holdDown></paper-ripple>
 		</div>
 	</template>
 
@@ -86,8 +165,7 @@
 
 			ready: function() {
 				this.AjaxSource = this.$.AjaxSource;
-				this.loadJoke();
-				//this.pages = document.querySelector('iron-pages');
+				this.loadJoke();				
 			},
 
 			prevPage : function(){
@@ -99,16 +177,23 @@
 
 			loadJoke : function(){
 				this.$.loader.active = true;
-				this.AjaxSource.generateRequest();	
+				this.$.jokeContent.style.display = 'none';
+				this.AjaxSource.generateRequest();				
+			},
+
+			addToFavorites : function() {
+				console.log(this);
 			},
 
 			handleResponse : function(){
 				this.$.loader.active = false;
-				console.log(this.ajaxResponse);
+				this.$.jokeContent.style.display = 'block';
 			},
 
-			handleError : function(){
-				console.log('here');
+			handleError : function(request, error){				
+				this.$.loader.active = false;
+				this.$.notification.text = error.error;				
+				this.$.notification.show();
 			}
 		});
 	</script>
