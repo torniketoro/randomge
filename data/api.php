@@ -9,12 +9,12 @@ $data = [
 	[
 		"id"  =>  2,
 		"text"  =>  " asd asd asdalsdk jalskdj alskdj asldkj ad",
-		"liked"  =>  true,
+		"liked"  =>  false,
 	],
 	[
 		"id"  =>  3,
 		"text"  =>  "dyuytuty uty u jalskdj alskdj asldkj ad",
-		"liked"  =>  true,
+		"liked"  =>  false,
 	],
 ];
 sleep(2);
