@@ -129,7 +129,7 @@
 			<div class="pages-content">		
 				<iron-pages id="pages" selected="0">
 					<div class="iron-selected">
-						<paper-icon-button icon="favorite" class="favorite" on-click="addToFavorites"></paper-icon-button>
+						<paper-icon-button icon="favorite" class="favorite" id="favorite" liked="{{ajaxResponse.liked}}" on-click="addToFavorites"></paper-icon-button>
 						<div id="jokeContent">{{ajaxResponse.text}}</div>
 					</div>
 				</iron-pages>
@@ -165,7 +165,7 @@
 
 			ready: function() {
 				this.AjaxSource = this.$.AjaxSource;
-				this.loadJoke();				
+				this.loadJoke();			
 			},
 
 			prevPage : function(){
@@ -182,7 +182,7 @@
 			},
 
 			addToFavorites : function() {
-				console.log(this);
+				var liked = this.$.favorite.liked;
 			},
 
 			handleResponse : function(){
