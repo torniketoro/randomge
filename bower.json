@@ -23,6 +23,7 @@
     "iron-pages": "PolymerElements/iron-pages#~1.0.2",
     "paper-fab": "PolymerElements/paper-fab#~1.0.3",
     "iron-ajax": "PolymerElements/iron-ajax#~1.0.3",
-    "paper-spinner": "PolymerElements/paper-spinner#~1.0.2"
+    "paper-spinner": "PolymerElements/paper-spinner#~1.0.2",
+    "paper-toast": "PolymerElements/paper-toast#~1.0.0"
   }
 }
