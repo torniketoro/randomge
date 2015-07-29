@@ -1,0 +1,26 @@
+<dom-module id="my-pages" attr-for-selected="data-route" selected="{{route}}">
+	<style>
+
+	</style>
+
+	<template>
+		<iron-pages attr-for-selected="data-route" selected="{{route}}">		
+			<section data-route="home">
+				home
+			</section>
+			<section data-route="jokes">
+				jokes
+			</section>
+			<section data-route="toasts">
+				toasts
+			</section>
+		</iron-pages>
+	</template>
+
+	<script>
+		Polymer ({
+			is: "my-pages",
+
+		});
+	</script>
+</dom-module>

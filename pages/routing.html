@@ -1,0 +1,20 @@
+<script>
+	window.addEventListener('WebComponentsReady', function() {
+		page('/', function() {
+			app.route = 'home';
+		});
+
+		page('/jokes', function() {
+			console.log('here');
+			app.route = 'jokes';
+		});
+
+		page('/toasts', function() {
+			app.route = 'toasts';
+		});
+
+		page({
+			hashbang: true
+		});
+	})
+</script>
