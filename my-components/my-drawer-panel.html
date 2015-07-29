@@ -1,8 +1,3 @@
-<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
-<link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-
 <dom-module id="my-drawer-panel">
 	<style>
 		paper-drawer-panel {
@@ -21,16 +16,41 @@
 			position:relative;
 			height:inherit;
 		}
+
+		.drawer-content paper-item {
+			display:block;
+			padding:10px 0px;
+			cursor:pointer;
+			background-color:#ffffff;
+			transition:all 0.1s ease-in;
+			-webkit-transition:all 0.1s ease-in;
+			-moz-transition:all 0.1s ease-in;
+		}
+
+		.drawer-content paper-item:hover {
+			padding-left:10px;
+			background-color: #cccccc;
+		}
 	</style>
 
 	<template>
-		<paper-drawer-panel>
+		<paper-drawer-panel id="paperDrawerPanel">
 			<paper-header-panel drawer>
 				<paper-toolbar>
 					<div>Randomge</div>
 				</paper-toolbar>
 				<div class="drawer-content">
-					Drawer content... 
+					<paper-menu selected="{{route}}" attr-for-selected="data-route">						
+						<paper-item data-route="home">
+							<a href="/">home</a>
+						</paper-item>
+						<paper-item data-route="jokes">
+							<a href="/jokes">Jokes</a>
+						</paper-item>
+						<paper-item data-route="toasts">
+							<a href="/toasts">Toasts</a>
+						</paper-item>
+					</paper-menu>
 				</div>
 			</paper-header-panel>
 			<paper-header-panel main>
@@ -39,7 +59,7 @@
 					<div>Title</div>
 				</paper-toolbar>
 				<div class="main-content">
-					<content></content>
+					<content selected="{{route}}" attr-for-selected="data-route"></content>
 				</div>
 			</paper-header-panel>
 		</paper-drawer-panel>

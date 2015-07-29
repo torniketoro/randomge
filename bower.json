@@ -26,6 +26,9 @@
     "paper-spinner": "PolymerElements/paper-spinner#~1.0.2",
     "paper-toast": "PolymerElements/paper-toast#~1.0.0",
     "paper-ripple": "PolymerElements/paper-ripple#~1.0.1",
-    "paper-elements": "polymerelements/paper-elements#~1.0.2"
+    "paper-elements": "polymerelements/paper-elements#~1.0.2",
+    "neon-animation": "PolymerElements/neon-animation#~1.0.6",
+    "page.js": "~1.6.3",
+    "platinum-sw": "PolymerElements/platinum-sw#~1.0.2"
   }
 }

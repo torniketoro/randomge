@@ -3,17 +3,47 @@
 	<head>
 		<title>randomge</title>
 		<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+		<script src="bower_components/page/page.js"></script>
+		<script src="service-worker.js"></script>
 		<meta http-equiv="X-UA-Compatible" content="chrome=1" />
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1">
 
 		<link rel="import" href="bower_components/polymer/polymer.html">
-		<link rel="import" href="my-components/my-drawer-panel.html">
-		<link rel="import" href="my-components/my-iron-page.html">
+		<link rel="import" href="my-components/elements.html">
 	</head>
 	
 	<body>
-		<my-drawer-panel>
-			<my-iron-pages></my-iron-pages>
-		</my-drawer-panel>
+		<template is="dom-bind" id="app">
+			<my-drawer-panel>
+				<iron-pages attr-for-selected="data-route" selected="{{route}}">		
+					<section data-route="home">
+						home
+					</section>
+					<section data-route="jokes">
+						<my-iron-pages></my-iron-pages>
+					</section>
+					<section data-route="toasts">
+						toasts
+					</section>
+				</iron-pages>
+			</my-drawer-panel>				
+			
+			<paper-toast id="caching-complete"
+				duration="6000"
+				text="Caching complete! This app will work offline.">
+			</paper-toast>
+
+			<platinum-sw-register auto-register
+				clients-claim
+				skip-waiting
+				on-service-worker-installed="displayInstalledToast">
+				<platinum-sw-cache default-cache-strategy="networkFirst"
+					precache-file="data/precache.json">
+				</platinum-sw-cache>
+			</platinum-sw-register>
+
+		</template>>
+		
+		<script src="res/js/app.js"></script>
 	</body>
 </html>
