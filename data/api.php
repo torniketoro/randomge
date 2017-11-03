@@ -18,4 +18,4 @@ $data = [
 	],
 ];
 sleep(2);
-echo json_encode(array_rand($data));
+echo json_encode($data[array_rand($data)]);
