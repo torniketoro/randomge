@@ -1,4 +1,5 @@
-# randomge
-random jokes
+# RandomGe
+
+Random jokes
 
 GUI for random.ge
